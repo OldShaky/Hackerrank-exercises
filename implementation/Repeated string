@@ -1,0 +1,24 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+
+
+main :: IO ()
+main = do
+    s <- getLine
+    n_temp <- getLine
+    let n = read n_temp :: Int
+        a = countAs s (length s)
+        k = div n (length s)
+        r = n - k*(length s)
+        l = countAs s r
+        result = (k*a) + l
+    print result
+    return ()
+
+countAs :: [Char] -> Int -> Int
+countAs [] _ = 0
+countAs _ 0 = 0
+countAs (x:xs) r
+    | x == 'a' = 1 + countAs xs (r-1)
+    | otherwise = countAs xs (r-1)
