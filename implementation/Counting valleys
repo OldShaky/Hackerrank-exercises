@@ -1,0 +1,26 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+
+
+main :: IO ()
+main = do
+    n_temp <- getLine
+    let n = read n_temp :: Int
+    st_temp <- getLine
+    let string = stringToInts st_temp
+        result = show $ countValleys string 0
+    putStrLn result
+
+stringToInts :: String -> [Int]
+stringToInts [] = []
+stringToInts (x:xs)
+    | x == 'U' = 1 : stringToInts xs
+    | x == 'D' = (-1) : stringToInts xs
+    | x == ' ' = stringToInts xs
+
+countValleys :: [Int] -> Int -> Int
+countValleys [] _ = 0
+countValleys (x:xs) k
+    | k == -1 && x == 1 = 1 + countValleys xs 0
+    | otherwise = countValleys xs (k+x)
