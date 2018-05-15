@@ -1,0 +1,23 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+
+
+main :: IO ()
+main = do
+    h_temp <- getLine
+    let h = map read $ words h_temp :: [Int]
+    word <- getLine
+    let zipped = zip ['a'..'z'] h
+        result = (length word)*(maximum $ makeList word zipped)
+    print result
+    return ()
+
+searchElem :: Char -> [(Char,Int)] -> Int
+searchElem a ( (x,y):rest )
+    | a == x = y
+    | otherwise = searchElem a rest
+
+makeList :: String -> [(Char,Int)] -> [Int]
+makeList [] _ = []
+makeList (x:xs) zipped = (searchElem x zipped) : (makeList xs zipped)
