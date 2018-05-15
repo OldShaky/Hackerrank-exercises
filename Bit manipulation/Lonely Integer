@@ -1,0 +1,18 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+import qualified Data.List as L
+
+main :: IO ()
+main = do
+    n_temp <- getLine
+    let n = read n_temp :: Int
+    a_temp <- getLine
+    let a = map read $ words a_temp :: [Int]
+    print $ (\[x] -> x) (algo a)
+
+algo :: [Int] -> [Int]
+algo [x] = [x]
+algo (x:xs)
+    | x `elem` xs = algo $ L.delete x xs
+    | otherwise = [x]
