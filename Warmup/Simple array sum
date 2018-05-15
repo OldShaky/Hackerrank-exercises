@@ -1,0 +1,15 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+
+main = do
+    n_temp <- getLine
+    array_temp <- getLine
+    let n = read n_temp :: Int
+    	array = sum $ sortArray array_temp
+    print array
+    return ()
+
+
+sortArray :: String -> [Int]
+sortArray x = map read $ words x :: [Int]
