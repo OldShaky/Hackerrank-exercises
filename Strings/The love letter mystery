@@ -1,0 +1,28 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+import Data.Char
+
+main :: IO ()
+main = do
+    q_temp <- getLine
+    let q = read q_temp :: Int
+    forM_ [1..q] $ \a0  -> do
+        s <- getLine
+        let l = determineL s
+            a = take l s
+            b = reverse $ drop l s
+        print $ countChanges a b
+
+countChanges :: [Char] -> [Char] -> Int
+countChanges [x] [] = 0
+countChanges [] [] = 0
+countChanges (x:xs) (y:ys)
+    | x == y = countChanges xs ys
+    | otherwise = (abs $ (ord y)-ord x) + countChanges xs ys
+
+determineL :: String -> Int
+dermineL [] = 0
+determineL x
+    | mod (length x) 2 == 0 = div (length x) 2
+    | otherwise = div (1+length x) 2
