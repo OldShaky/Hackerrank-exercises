@@ -1,0 +1,29 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+
+
+main :: IO ()
+main = do
+    t_temp <- getLine
+    let t = read t_temp :: Int
+    forM_ [1..t] $ \a0  -> do
+        n_temp <- getLine
+        let n_t = words n_temp
+        let n = read $ n_t!!0 :: Int
+        let k = read $ n_t!!1 :: Int
+        a_temp <- getLine
+        let a = map read $ words a_temp :: [Int]
+            result = k > (presentStudents a)
+        if result == True
+            then putStrLn "YES"
+        else if result == False
+            then putStrLn "NO"
+        else putStrLn "Fail"
+        return ()
+
+presentStudents :: [Int] -> Int
+presentStudents [] = 0
+presentStudents (x:xs)
+    | x <= 0 = 1 + presentStudents xs
+    | 0 < x = presentStudents xs
