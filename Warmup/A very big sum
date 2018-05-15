@@ -1,0 +1,18 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+import Data.List
+import Data.List.Split.Internals
+
+main = do
+    n_temp <- getLine
+    numbers_temp <- getLine
+    let n = read n_temp :: Integer
+    	numbers = words numbers_temp
+    	result = sum $ stringconv numbers
+    putStrLn $ show result
+    return ()
+
+stringconv :: [String] -> [Integer]
+stringconv [] = []
+stringconv (x:xs) = (read x :: Integer) : stringconv xs
