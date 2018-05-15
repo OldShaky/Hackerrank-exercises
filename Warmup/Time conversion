@@ -1,0 +1,20 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+
+
+main :: IO ()
+main = do
+    s <- getLine
+    let time = convert s
+    putStrLn time
+    return ()
+
+convert :: String -> String
+convert x
+	| last (init x) == 'P' && (take 2 x) == "12" = init (init x)
+	| last (init x) == 'P' && (x !! 2) == ':' = show ((read (take 2 x) :: Int)+12) ++ (drop 2 (init (init x)))
+	| last (init x) == 'P' && (x !! 1) == ':' = show ((read (take 1 x) :: Int)+12) ++ (drop 1 (init (init x)))
+	| last (init x) == 'A' && (take 2 x) == "12" = "00" ++ (drop 2 (init (init x)))
+	| last (init x) == 'A' = init (init x)
+	| otherwise = "error"
