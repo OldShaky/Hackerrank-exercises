@@ -1,0 +1,18 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+
+
+main :: IO ()
+main = do
+    n_temp <- getLine
+    let n = read n_temp :: Int
+    p_temp <- getLine
+    let p = read p_temp :: Int
+        front = div p 2
+        back = div (n-p) 2
+        result = show $ min front back
+    putStrLn result
+    return ()
+
+
