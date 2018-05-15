@@ -1,1 +1,23 @@
 
+import Control.Applicative
+import Control.Monad
+import System.IO
+import Data.List
+
+main :: IO ()
+main = do
+    x1_temp <- getLine
+    let x1_t = words x1_temp
+    let x1 = read $ x1_t!!0 :: Float
+    let v1 = read $ x1_t!!1 :: Float
+    let x2 = read $ x1_t!!2 :: Float
+    let v2 = read $ x1_t!!3 :: Float
+        n = (x2-x1)/(v1-v2)
+    kangaroo n
+    return ()
+
+kangaroo :: Float -> IO ()    
+kangaroo n
+    | n < 0 = do putStrLn "NO"
+    | n `elem` [1..10^4] = do putStrLn "YES"
+    | otherwise = do putStrLn "NO"
