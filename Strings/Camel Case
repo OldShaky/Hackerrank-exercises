@@ -1,0 +1,10 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+
+
+main :: IO ()
+main = do
+    s <- getLine
+    let result = 1 + length [x | x<-s , x `elem` ['A'..'Z'] ]
+    print result
