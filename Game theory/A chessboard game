@@ -1,0 +1,28 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+
+
+main :: IO ()
+main = do
+    t_temp <- getLine
+    let t = read t_temp :: Int
+    forM_ [1..t] $ \a0  -> do
+        x_temp <- getLine
+        let x_t = words x_temp
+            x = read $ x_t!!0 :: Int
+            y = read $ x_t!!1 :: Int
+        putStrLn ( winner x y)
+
+checksquare :: Int -> Int -> Bool
+checksquare x y
+    | (mod x 4) == 1 && (mod y 4) == 1 = True
+    | (mod x 4) == 1 && (mod y 4) == 2 = True
+    | (mod x 4) == 2 && (mod y 4) == 1 = True
+    | (mod x 4) == 2 && (mod y 4) == 2 = True
+    | otherwise = False
+
+winner :: Int -> Int -> String
+winner x y
+    | checksquare x y == True = "Second"
+    | otherwise = "First"
