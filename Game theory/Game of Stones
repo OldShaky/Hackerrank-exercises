@@ -1,0 +1,26 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+
+
+main :: IO ()
+main = do
+    t_temp <- getLine
+    let t = read t_temp :: Int
+    forM_ [1..t] $ \a0  -> do
+        n_temp <- getLine
+        let n = read n_temp :: Int
+        putStrLn ( winner n )
+        return ()
+
+checkno :: Int -> Bool
+checkno n
+    | mod n 7 == 0 = True
+    | mod n 7 == 1 = True
+    | otherwise = False
+
+winner :: Int -> String
+winner n
+    | checkno n == True = "Second"
+    | checkno n == False = "First"
+    | otherwise = "error"
