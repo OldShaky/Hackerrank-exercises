@@ -1,0 +1,27 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+
+
+main :: IO ()
+main = do
+    n_temp <- getLine
+    let n = read n_temp :: Int
+    grades_temp <- getMultipleLines n
+    let grades = map (read :: String -> Int) grades_temp
+    mapM_ print $ algo grades
+
+getMultipleLines :: Int -> IO [String]
+getMultipleLines n
+    | n <= 0 = return []
+    | otherwise = do          
+        x <- getLine         
+        xs <- getMultipleLines (n-1)    
+        let ret = (x:xs)    
+        return ret          
+
+algo :: [Int] -> [Int]
+algo [] = []
+algo (x:xs)
+    | mod x 5 > 2 && ( x + 5 - mod x 5) >= 40 = ( x + 5 - mod x 5) : algo xs
+    | otherwise = x : algo xs
