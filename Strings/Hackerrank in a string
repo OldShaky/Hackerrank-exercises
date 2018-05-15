@@ -1,0 +1,22 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+
+
+main :: IO ()
+main = do
+    q_temp <- getLine
+    let q = read q_temp :: Int
+    forM_ [1..q] $ \a0  -> do
+        s <- getLine
+        if testString s "hackerrank"
+            then putStrLn "YES"
+        else putStrLn "NO"
+
+
+testString :: [Char] -> [Char] -> Bool
+testString x [] = True
+testString [] y = False
+testString (x:xs) (y:ys)
+    | x == y = testString xs ys
+    | otherwise = testString xs (y:ys)
