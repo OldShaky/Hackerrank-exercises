@@ -1,0 +1,35 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+
+
+main :: IO ()
+main = do
+    n_temp <- getLine
+    let n = read n_temp :: Int
+    s_temp <- getLine
+    let s = map read $ words s_temp :: [Int]
+    d_temp <- getLine
+    let d_t = words d_temp
+    let d = read $ d_t!!0 :: Int
+    let m = read $ d_t!!1 :: Int
+        summedlist = map (d == ) $ sumFirstM s m        -- list with bools, true if d == sum of m elements
+        result = resultAlgo summedlist                  -- count amount of Trues in a list
+    putStrLn $ show result
+    return ()
+
+resultAlgo :: [Bool] -> Int
+resultAlgo [] = 0
+resultAlgo (x:xs)
+    | x == True = 1 + resultAlgo xs
+    | otherwise = 0 + resultAlgo xs
+
+takeFirstM :: [Int] -> Int -> [Int]             -- only applied in sumFirstM, shortens a list to first m entries
+takeFirstM x 0 = []
+takeFirstM (x:xs) m = x : takeFirstM xs (m-1)
+
+sumFirstM :: [Int] -> Int -> [Int]              -- sums all m consequtive elements and saves in list
+sumFirstM (x:xs) m
+    | (length (x:xs)) == m = ( sum (x:xs) ) : []
+    | (length (x:xs)) < m = []
+    | otherwise = (sum $ takeFirstM (x:xs) m) : (sumFirstM xs m)
