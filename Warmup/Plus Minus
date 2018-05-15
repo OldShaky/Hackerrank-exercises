@@ -1,0 +1,36 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+import Data.List
+
+main :: IO ()
+main = do
+    n_temp <- getLine
+    let n = read n_temp :: Float
+    arr_temp <- getLine
+    let arr = map read $ words arr_temp :: [Int]
+        countNegs = fromIntegral (length $ filterNegs arr) :: Float
+        countPos = fromIntegral (length $ filterPos arr) :: Float
+        countZero = fromIntegral (length $ filterZero arr) :: Float
+    print (countPos / n)
+    print (countNegs / n)
+    print (countZero / n)
+    return ()
+
+filterNegs :: [Int] -> [Int]
+filterNegs [] = []
+filterNegs (x:xs)
+  | x < 0 = x : filterNegs xs
+  | otherwise = filterNegs xs
+
+filterPos :: [Int] -> [Int]
+filterPos [] = []
+filterPos (x:xs)
+  | x > 0 = x : filterPos xs
+  | otherwise = filterPos xs
+
+filterZero :: [Int] -> [Int]
+filterZero [] = []
+filterZero (x:xs)
+  | x == 0 = x : filterZero xs
+  | otherwise = filterZero xs
