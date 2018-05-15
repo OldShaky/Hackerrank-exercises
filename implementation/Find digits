@@ -1,0 +1,22 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+import Data.List
+
+main :: IO ()
+main = do
+    t_temp <- getLine
+    let t = read t_temp :: Int
+    forM_ [1..t] $ \a0  -> do
+        n_temp <- getLine
+        let digits = map (\x -> x-48) $ map fromEnum n_temp
+            n = read n_temp :: Int
+        print $ countDivs digits n
+
+
+countDivs :: [Int] -> Int -> Int
+countDivs [] _ = 0
+countDivs (x:xs) n
+    | x == 0 = countDivs xs n
+    | mod n x == 0 = 1 + countDivs xs n
+    | otherwise = countDivs xs n
