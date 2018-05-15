@@ -1,0 +1,37 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+
+
+main :: IO ()
+main = do
+    n_temp <- getLine
+    let n = read n_temp :: Int
+    a_temp <- getLine
+    let a = map read $ words a_temp :: [Int]
+        list = removeDups a
+        result = show $ maximum (algo list a)
+    putStrLn result
+    return ()
+
+removeN :: Int -> [Int] -> [Int] -- helper for removeDubs
+removeN _ [] = []
+removeN n (x:xs)
+    | n == x = removeN n xs
+    | otherwise = x : removeN n xs
+
+removeDups :: [Int] -> [Int] -- remove Duplicates
+removeDups [] = []
+removeDups (x:xs) = x : removeDups (removeN x xs)
+
+checkNum :: Int -> [Int] -> Int
+checkNum _ [] = 0
+checkNum n (x:xs)
+    | x == (n-1) = 1 + checkNum n xs
+    | x == n = 1 + checkNum n xs
+    | otherwise = checkNum n xs
+
+algo :: [Int] -> [Int] -> [Int]
+algo [] _ = []
+algo _ [] = []
+algo (a:as) list = ( checkNum a list ) : ( algo as list )
