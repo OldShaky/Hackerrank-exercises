@@ -1,0 +1,35 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+
+
+main :: IO ()
+main = do
+    n_temp <- getLine
+    let n = read n_temp :: Int
+    ar_temp <- getLine
+    let ar = map read $ words ar_temp :: [Int]
+        tuple = makeTuple ar
+        result = show $ maxTuple tuple
+    putStrLn result
+    return ()
+
+addTuples :: (Num a, Eq a) => (a,a,a,a,a) -> (a,a,a,a,a) -> (a,a,a,a,a)
+addTuples (a1,b1,c1,d1,e1) (a2,b2,c2,d2,e2) = (a1+a2,b1+b2,c1+c2,d1+d2,e1+e2)
+
+makeTuple :: (Num a, Eq a) => [a] -> (a,a,a,a,a)
+makeTuple [] = (0,0,0,0,0)
+makeTuple (x:xs)
+    | x == 1 = (1,0,0,0,0) `addTuples` (makeTuple xs)
+    | x == 2 = (0,1,0,0,0) `addTuples` (makeTuple xs)
+    | x == 3 = (0,0,1,0,0) `addTuples` (makeTuple xs)
+    | x == 4 = (0,0,0,1,0) `addTuples` (makeTuple xs)
+    | x == 5 = (0,0,0,0,1) `addTuples` (makeTuple xs)
+
+maxTuple :: (Num a, Ord a) => (a,a,a,a,a) -> a
+maxTuple (a,b,c,d,e)
+    | ( maximum [a,b,c,d,e] ) == a = 1
+    | ( maximum [a,b,c,d,e] ) == b = 2
+    | ( maximum [a,b,c,d,e] ) == c = 3
+    | ( maximum [a,b,c,d,e] ) == d = 4
+    | ( maximum [a,b,c,d,e] ) == e = 5
