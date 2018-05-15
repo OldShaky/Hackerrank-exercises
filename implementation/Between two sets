@@ -1,0 +1,38 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+
+
+main :: IO ()
+main = do
+    n_temp <- getLine
+    let n_t = words n_temp
+    let n = read $ n_t!!0 :: Int
+    let m = read $ n_t!!1 :: Int
+    a_temp <- getLine
+    let a = map read $ words a_temp :: [Int]
+    b_temp <- getLine
+    let b = map read $ words b_temp :: [Int]
+        list = map (oneNr a b) [maximum a..minimum b]
+        result = resultAlgo list
+    putStrLn $ show result
+    return ()
+
+
+resultAlgo :: [Bool] -> Int
+resultAlgo [] = 0
+resultAlgo (x:xs)
+    | x == True = 1 + resultAlgo xs
+    | otherwise = 0 + resultAlgo xs
+
+oneNr :: [Int] -> [Int] -> Int -> Bool
+oneNr [] [] _ = True
+oneNr [] (y:ys) a
+    | y `rem` a == 0 = oneNr [] ys a
+    | otherwise = False
+oneNr (x:xs) [] a
+    | a `rem` x == 0 = oneNr xs [] a
+    | otherwise = False
+oneNr (x:xs) (y:ys) a
+    | (y `rem` a == 0) && (a `rem` x == 0) = oneNr xs ys a
+    | otherwise = False
