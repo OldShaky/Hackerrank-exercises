@@ -1,0 +1,29 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+
+
+main :: IO ()
+main = do
+    nk_temp <- getLine
+    let n = (map read $ words nk_temp :: [Int]) !! 0
+        k = (map read $ words nk_temp :: [Int]) !! 1
+    arr_temp <- getLine
+    let arr = map read $ words arr_temp :: [Int]
+    b_temp <- getLine
+    let b = read b_temp :: Int
+        runningRes = average arr
+        trueRes = average $ removeEleK arr k
+        difference = show $ runningRes - trueRes
+    if b == trueRes
+        then putStrLn "Bon Appetit"
+        else do
+            putStrLn difference
+    return ()
+
+removeEleK :: [Int] -> Int -> [Int]         --remove element k from list
+removeEleK (x:xs) 0 = xs
+removeEleK (x:xs) k = x:removeEleK xs (k-1)
+
+average :: [Int] -> Int
+average x = (sum x) `div` 2
