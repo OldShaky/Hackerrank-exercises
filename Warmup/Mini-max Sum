@@ -1,0 +1,19 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+import Data.List
+
+main :: IO ()
+main = do
+    arr_temp <- getLine
+    let arr = map read $ words arr_temp :: [Int]
+    	min = minsum arr
+    	max = maxsum arr
+    putStrLn (( show min ) ++ " " ++ ( show max ))
+    return ()
+
+minsum :: [Int] -> Int
+minsum x = sum $ delete (maximum x) x
+
+maxsum :: [Int] -> Int
+maxsum x = sum $ delete (minimum x) x
