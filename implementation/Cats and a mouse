@@ -1,0 +1,23 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+
+
+main :: IO ()
+main = do
+    q_temp <- getLine
+    let q = read q_temp :: Int
+    forM_ [1..q] $ \a0  -> do
+        x_temp <- getLine
+        let x_t = words x_temp
+        let x = read $ x_t!!0 :: Int
+        let y = read $ x_t!!1 :: Int
+        let z = read $ x_t!!2 :: Int
+        putStrLn $ algo x y z
+    return ()
+
+algo :: Int -> Int -> Int -> String
+algo a b c
+    | (abs (a-c) > abs (b-c) ) = "Cat B"
+    | (abs (a-c) < abs (b-c) ) = "Cat A"
+    | otherwise = "Mouse C"
