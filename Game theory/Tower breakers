@@ -1,0 +1,21 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+
+
+main :: IO ()
+main = do
+    t_temp <- getLine
+    let t = read t_temp :: Int
+    forM_ [1..t] $ \a0  -> do
+        n_temp <- getLine
+        let n_t = words n_temp
+            n = read $ n_t!!0 :: Int
+            m = read $ n_t!!1 :: Int
+        putStrLn (winner n m)
+
+winner :: Int -> Int -> String
+winner n m
+    | m == 1 = "2"
+    | odd n == True = "1"
+    | even n == True = "2"
