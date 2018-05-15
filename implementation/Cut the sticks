@@ -1,0 +1,18 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+
+
+main :: IO ()
+main = do
+    n_temp <- getLine
+    let n = read n_temp :: Int
+    arr_temp <- getLine
+    let arr = map read $ words arr_temp :: [Int]
+    mapM_ print $ lengths arr
+    return ()
+
+lengths :: [Int] -> [Int]
+lengths [] = []
+lengths [x] = [1]
+lengths x = ( length x ) : lengths [ a-(minimum x) | a <- x ,  a - minimum x > 0 ]
