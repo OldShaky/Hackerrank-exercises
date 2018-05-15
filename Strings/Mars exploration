@@ -1,0 +1,21 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+
+
+main :: IO ()
+main = do
+    s <- getLine
+    print $ countNumbers s
+
+countNumbers :: [Char] -> Int
+countNumbers [] = 0
+countNumbers (x:y:z:xs)
+    | x == 'S' && y == 'O' && z == 'S' = countNumbers xs
+    | x == 'S' && y == 'O' && z /= 'S' = 1 + countNumbers xs
+    | x == 'S' && y /= 'O' && z == 'S' = 1 + countNumbers xs
+    | x /= 'S' && y == 'O' && z == 'S' = 1 + countNumbers xs
+    | x == 'S' && y /= 'O' && z /= 'S' = 2 + countNumbers xs
+    | x /= 'S' && y == 'O' && z /= 'S' = 2 + countNumbers xs
+    | x /= 'S' && y /= 'O' && z == 'S' = 2 + countNumbers xs
+    | x /= 'S' && y /= 'O' && z /= 'S' = 3 + countNumbers xs
