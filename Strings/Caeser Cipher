@@ -1,0 +1,28 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+
+
+main :: IO ()
+main = do
+    n_temp <- getLine
+    let n = read n_temp :: Int
+    s <- getLine
+    k_temp <- getLine
+    let k = read k_temp :: Int
+        result = caesarShift s k
+    putStrLn result
+    return ()
+
+shiftK :: Char -> Int -> Char   -- push a char k times
+shiftK x 0 = x
+shiftK 'Z' k = shiftK 'A' (k-1)
+shiftK 'z' k = shiftK 'a' (k-1)
+shiftK x k = shiftK (succ x) (k-1)
+
+caesarShift :: String -> Int -> String  -- do shiftK for the whole string, exception if char isn't a letter
+caesarShift x 0 = x
+caesarShift [] _ = []
+caesarShift (x:xs) k
+    | (x `elem` ['a'..'z'] ) == False && (x `elem` ['A'..'Z']) == False = x : caesarShift xs k
+    | otherwise = (shiftK x k) : caesarShift xs k
