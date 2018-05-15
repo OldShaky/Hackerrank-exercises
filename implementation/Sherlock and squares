@@ -1,0 +1,18 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+
+
+main :: IO ()
+main = do
+    q_temp <- getLine
+    let q = read q_temp :: Int
+    forM_ [1..q] $ \a0  -> do
+        a_temp <- getLine
+        let a_t = words a_temp
+        let a = read $ a_t!!0 :: Int
+        let b = read $ a_t!!1 :: Int
+            result = (countSquares b) - countSquares (a-1)
+        print result
+
+countSquares = floor . sqrt . fromIntegral
