@@ -1,0 +1,20 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+
+
+main :: IO ()
+main = do
+    q_temp <- getLine
+    let q = read q_temp :: Int
+    forM_ [1..q] $ \a0  -> do
+        s <- getLine
+        print $ countDeletions s
+
+
+countDeletions :: [Char] -> Int
+countDeletions [] = 0
+countDeletions [x] = 0
+countDeletions (x:y:xs)
+    | x == y = 1 + countDeletions (y:xs)
+    | otherwise = countDeletions (y:xs)
