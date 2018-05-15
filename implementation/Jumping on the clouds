@@ -1,0 +1,22 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+
+
+main :: IO ()
+main = do
+    n_temp <- getLine
+    let n = read n_temp :: Int
+    c_temp <- getLine
+    let c = map read $ words c_temp :: [Int]
+    print $ jumps c
+
+jumps :: [Int] -> Int
+jumps [] = 0
+jumps [x] = 0
+jumps [x,y] = 1
+jumps (x:y:z:xs)
+    | y == 1 = 1 + jumps (z:xs)
+    | z == 1 = 1 + jumps (y:z:xs)
+    | y == 0 && z == 0 = 1 + jumps (z:xs)
+
