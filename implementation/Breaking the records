@@ -1,0 +1,27 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+
+
+main :: IO ()
+main = do
+    n_temp <- getLine
+    let n = read n_temp :: Int
+    score_temp <- getLine
+    let score = map read $ words score_temp :: [Int]
+        high = show $ recordHigh score (head score)
+        low = show $ recordLow score (head score)
+    putStrLn (high ++ " " ++ low)
+    return ()
+
+recordHigh :: [Int] -> Int -> Int
+recordHigh [] a = 0
+recordHigh (x:xs) a
+    | x > a     = 1 + recordHigh xs x
+    | otherwise = recordHigh xs a
+
+recordLow :: [Int] -> Int -> Int
+recordLow [] a = 0
+recordLow (x:xs) a
+    | x < a = 1 + recordLow xs x
+    | otherwise = recordLow xs a
