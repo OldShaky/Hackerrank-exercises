@@ -1,0 +1,19 @@
+import Data.List
+import Data.Char
+
+
+main :: IO ()
+main = do
+    s <- getLine
+    let lower = map toLower s
+    if isPangram lower ['a'..'z']
+        then putStrLn "pangram"
+    else putStrLn "not pangram"
+    return ()
+
+isPangram :: [Char] -> [Char] -> Bool
+isPangram _ [] = True
+isPangram [] _ = False
+isPangram (x:xs) y
+    | x `elem` y = isPangram xs (delete x y)
+    | otherwise = isPangram xs y
