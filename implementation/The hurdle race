@@ -1,0 +1,20 @@
+import Control.Applicative
+import Control.Monad
+import System.IO
+
+
+main :: IO ()
+main = do
+    n_temp <- getLine
+    let n_t = words n_temp
+    let n = read $ n_t!!0 :: Int
+    let k = read $ n_t!!1 :: Int
+    height_temp <- getLine
+    let height = map read $ words height_temp :: [Int]
+        result = drinks height k
+    print result
+
+drinks :: [Int] -> Int -> Int
+drinks x k = if ( (maximum x) < k)
+                    then 0
+                    else (maximum x)-k
